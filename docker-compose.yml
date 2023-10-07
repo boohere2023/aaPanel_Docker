@@ -34,7 +34,5 @@ services:
       - '--web.config=/etc/prometheus/web.yml'
     ports:
       - 9100:9100
-    networks:
-      - monitoring
     labels:
       org.label-schema.group: "monitoring"
