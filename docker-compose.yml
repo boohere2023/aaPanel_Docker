@@ -24,15 +24,10 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro
-      - ./prometheus/web.yml:/etc/prometheus/web.yml
     command:
       - '--path.procfs=/host/proc'
       - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
-      - '--collector.netclass.ignored-devices=^(veth.*)$$'
-      - '--web.config=/etc/prometheus/web.yml'
-    ports:
-      - 9100:9100
-    labels:
-      org.label-schema.group: "monitoring"
+    expose:
+      - 9100
