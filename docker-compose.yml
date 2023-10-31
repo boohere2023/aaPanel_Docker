@@ -5,6 +5,8 @@ services:
     build: 
       context: ./bin/aapanel
     container_name: "aapanel-webserver"
+    env_file:
+      - ./.env
     ports:
       - "${AAPANEL_PORT}:7800"
       - "${WEBSERVER_HOST_PORT}:80"
@@ -14,6 +16,5 @@ services:
     volumes: 
       - ${WEBSITE_DATA}:/www/wwwroot
       - ${WEBSITE_LOG}:/www/wwwlogs
-    env_file:
-      - ./.env
+    
 
