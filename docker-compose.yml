@@ -33,3 +33,17 @@ services:
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
     ports:
       - 9100:9100
+
+  mysqld-exporter:
+    image: quay.io/prometheus/mysqld-exporter
+    command:
+     - -collect.info_schema.tablestats
+    container_name: mysqld-exporter
+    environment:
+      - DATA_SOURCE_NAME=mysqld_exporter:5BSAvzaKmTttTUif@(mysqld:3306)/
+    ports:
+      - 9104:9104
+    links:
+      - aapanel
+    depends_on:
+      - aapanel
