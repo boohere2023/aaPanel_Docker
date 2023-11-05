@@ -11,6 +11,7 @@ services:
       - "${WEBSERVER_SECURE_HOST_PORT}:443"
       - "${PHPMYADMIN_PORT}:888"
       - "${REDIS_PORT}:6379"
+      - "3306:3306"
     volumes: 
       - ${WEBSITE_DATA}:/www/wwwroot
       - ${WEBSITE_LOG}:/www/wwwlogs
@@ -32,18 +33,13 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
     ports:
-      - 9100:9100
+      - "9100:9100"
 
   mysqld-exporter:
-    image: quay.io/prometheus/mysqld-exporter
-    command:
-     - -collect.info_schema.tablestats
+    image: prom/mysqld-exporter
     container_name: mysqld-exporter
     environment:
-      - DATA_SOURCE_NAME=mysqld_exporter:5BSAvzaKmTttTUif@(mysqld:3306)/
+      - DATA_SOURCE_NAME=mysqld_exporter:5BSAvzaKmTttTUif@(aapanel:3306)/
     ports:
-      - 9104:9104
-    links:
-      - aapanel
-    depends_on:
-      - aapanel
+      - "9104:9104"
+
